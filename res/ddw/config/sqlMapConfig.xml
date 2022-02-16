@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig
+	PUBLIC "-//ibatis.apache.org//DTD Sql Map Config 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+	
+<sqlMapConfig>
+	<!--
+		DB와 연결하는 정보를 properties파일에 설정해 놓고
+		이 properties파일의 내용을 읽어올 수 있도록 경로를 설정한다.
+	  -->
+	  <properties resource="ddw/config/dbinfo.properties"/>
+	  
+	  <!--
+	  	각각의 sqlMap파일(SQL문이 작성된 파일)의 namespace속성값과 id속성값을 연결해서
+	  	실행할 쿼리문을 선택한다.
+	    -->
+	  <settings useStatementNamespaces="true"/>
+	  
+	  <!--
+	  	쿼리문에 사용할 VO객체는 패키지 이름을 포함한 전체 이름을 사용해야하는데
+	  	그렇게 되면 문장이 너무 길어질 수 있다. 그래서 전체 이름을 대신해서 사용할
+	  	alias를 설정할 수 있다.
+	  	
+	  	형식) <typeAlias alias="alias명" type="클래스의 풀네임"/>
+	  	
+	    -->
+	    <typeAlias alias="memberVo" type="ddw.vo.MemberVO"/>
+	    <typeAlias alias="mainVo" type="ddw.vo.MainVO"/>
+	    <typeAlias alias="noticeVo" type="ddw.vo.NoticeVO"/>
+	    <typeAlias alias="prodvo" type="ddw.vo.ProdVO"/>
+	    <typeAlias alias="ddVo" type="ddw.vo.DdVO"/>
+	    <typeAlias alias="oneVo" type="ddw.vo.OneVO"/>
+	    <typeAlias alias="visitVo" type="ddw.vo.VisitVO"/>
+	    <typeAlias alias="provo" type="ddw.vo.ProfileVO"/>
+	    <typeAlias alias="photoVo" type="ddw.vo.PhotoVO"/>
+	    <typeAlias alias="gbookVo" type="ddw.vo.GbookVO"/>
+	    <typeAlias alias="faqVo" type="ddw.vo.FaqVO"/>
+	    <typeAlias alias="faqreVo" type="ddw.vo.FaqreVO"/>
+	    <typeAlias alias="diaryVo" type="ddw.vo.DiaryVO"/>
+	    <typeAlias alias="diaryreVo" type="ddw.vo.DiaryreVO"/>
+	    <typeAlias alias="photoreVo" type="ddw.vo.PhotoreVO"/>
+        <typeAlias alias="miniVo" type="ddw.vo.MiniVO"/>	  
+	    <typeAlias alias="skinVo" type="ddw.vo.SkinVO"/>
+	  <!-- 
+		DB와 연결을 처리하는 부분	    
+	   -->
+	    <transactionManager type="JDBC">
+	    	<dataSource type="SIMPLE">
+	    		<property name="JDBC.Driver" value="${driver}"/>
+	    		<property name="JDBC.ConnectionURL" value="${url}"/>
+	    		<property name="JDBC.Username" value="${user}"/>
+	    		<property name="JDBC.Password" value="${pass}"/>
+	    	</dataSource>
+	    </transactionManager>
+	    
+	  <!-- 실행할 SQL문 등록하기 -->  
+	    
+	  <!-- 
+	  	실행할 SQL문은 xml문서로 따로 작성한 후 그 xml문서를 아래와 같이 등록하면 된다.
+	  	
+	  	형식) <sqlMap resource="경로명/파일명.xml"/>
+	   -->
+	  
+	  <sqlMap resource="ddw/mapping/member.xml"/>
+	  <sqlMap resource="ddw/mapping/board.xml"/>
+	  <sqlMap resource="ddw/mapping/prod.xml"/>
+	  <sqlMap resource="ddw/mapping/ddworld.xml"/>
+	  <sqlMap resource="ddw/mapping/minihome.xml"/>
+	    
+</sqlMapConfig>	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
