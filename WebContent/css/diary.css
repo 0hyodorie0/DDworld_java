@@ -1,0 +1,290 @@
+body{
+/*   background-color: #a3a3a3; */
+/*   background-image: url("../css/background.png"); */
+  background-size: 100px;
+
+/*   position: fixed; */
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+/*   * 기본 폰트 설정 */
+  font-family: "Noto Sans KR", sans-serif;
+	font-size:1em;
+}
+
+.menu-container {
+  flex: 0.15;
+
+/*   * 임시 CSS */
+  border: none;
+}
+
+.content-container{
+/* 	width : 1200px; */
+	width : 100%;
+	max-width:1200px;
+	min-width:650px;
+	
+}
+
+.content-box {
+	position: relative;
+}
+
+.box {
+  background-color: white;
+  flex: 3;
+  border-radius: 10px;
+  border: 1px solid #cdcdcd;
+}
+
+.diary-scrollbox {
+/* 	width : 700px; */
+	width : 100%;
+	max-width:1200px;
+	min-width:650px;
+	position: relative;
+	top: 5px;
+	left: 1px;
+	right: 15px;
+	bottom: 15px;
+	overflow: auto; /*콘텐츠 흘러넘침 방지*/
+}
+
+.calendar {
+	display: flex;
+	align-items: center;
+	height: 5rem;
+	font-family: "NeoDunggeunmo";
+/* 	border: 1px solid #EDEDF0; */
+}
+#wrbtn{
+	
+	
+}
+.schedule{
+	margin-top : 5px;
+	background-color: white;
+/*     flex: 3; */
+    border-radius: 10px;
+    border: 1px solid #cdcdcd;
+/*     height: 50px; */
+
+}
+.toDate, .toMon{
+	font-size : 1.3em;
+}
+
+.schedule_list{
+/* 	float: left; */
+	
+}
+.diabtn{
+/* 	font-size : 6px; */
+/* 	float:right; */
+}
+.date-today {
+	flex: 0;
+/* 	font-size : 1.2em; */
+	align-items: center;
+	text-align: center;
+/* 	padding: 0.5rem 0.8rem; */
+	margin-right: 0.8rem;
+	color: #1b85ba;
+}
+.todate{
+	font-size : 1.4em;
+}
+
+ .schBtn{
+	float:right; 
+/* 	font-size : 2px; */
+} 
+.diaryHid input[type="submit"]{
+	float: right;
+    margin-top: -20px;
+}
+.date-list {
+	flex: 1;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: start;
+	position:relative;
+}
+.date-list::after{
+	content:'';
+	display:block;
+	position:absolute;
+	width:100%;
+	height:1px;
+	border-bottom:1px dashed gray;
+	top:45px;
+	left:0;
+}
+
+.cal-day, .date {
+	    display: inline-block;
+	margin: 5px;
+	color : #cac9c6;
+	font-size: 1.2em;
+}
+
+.date-red {
+	color: red;
+}
+
+.date-blue {
+ 	color: blue;
+}
+
+
+.diary {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #EDEDF0;
+	min-height: 70%;
+	margin-bottom: 1.5rem;
+/* 	background : white; */
+}
+
+.diary-date {
+	flex: 0;
+	font-family: "NeoDunggeunmo";
+	color: #288fa6;
+	padding: 1rem;
+	font-size:1.3rem;
+}
+
+.date-mon{
+	margin-right:15px;
+	font-size:1.2em;
+}
+
+.toWeek{
+	color:#cfd1cc;
+	
+}
+/* .day:nth-child(7n + 1), */
+/* .date:nth-child(7n + 1) { */
+/*   color: red; */
+/* } */
+
+/* .day:nth-child(7n), */
+/* .date:nth-child(7n) { */
+/* /*   color: blue; */ */
+/* } */
+
+.nav-btn{
+background: none;
+    border: none;
+}
+
+.go-prev{
+	
+	background: none;
+    border: none;
+}
+
+.selBtn{
+/* 	background: #8A2BE2; */
+/* /* 	border: none;	 */ */
+/* 	border-color : #8A2BE2; */
+/* 	border-radius: 100%; */
+/* /* 	width:20px; */ */
+/* /* 	height : 20px; */ */
+/* padding : 10px,10px,10px,10px; */
+
+}
+
+
+.cal_top{
+    text-align: center;
+    font-size: 30px;
+}
+.cal{
+    text-align: center; 
+}
+table.calendar{
+    border: 1px solid black;
+    display: inline-table;
+    text-align: left;
+}
+table.calendar td{
+    vertical-align: top;
+    border: 1px solid skyblue;
+    width: 100px;
+}
+
+.content-box {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+/* Dropdown button */
+.dropdown-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #a3a3a3;
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+/* Links inside the dropdown */
+.dropdown-content > a {
+  display: block;
+  color: black;
+  padding: 0.4rem;
+  text-decoration: none;
+  background-color: white;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  width: 100%;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content > a:hover {
+  background-color: #a3a3a3;
+}
+
+
+
+/* Change the background color of the dropdown button 
+when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: white;
+}
+
+
+
+
+.selBtn {
+	display:block; 
+/* 	width:30px;  */
+/* 	height:30px;  */
+/* 	line-height:40px;  */
+	border:1px #8000ff solid;
+/* 	margin:15px auto;  */
+	background-color:#991be4; 
+	text-align:center; 
+	cursor: pointer; 
+	color:#0000a0; 
+	transition:all 0.9s, color 0.3; 
+	border-radius: 50%;
+	} 
+.selBtn:hover{ 
+	box-shadow: 200px 0 0 0 rgba(0,0,0,0.20) inset, 
+				-200px 0 0 0 rgba(0,0,0,0.20) inset; 
+}
