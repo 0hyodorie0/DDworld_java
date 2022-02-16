@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="member">
+
+	<select id="login" parameterClass="memberVo" resultClass="memberVo">
+		select * from MEMBER where MEM_ID = #mem_id# and MEM_PASS = #mem_pass#
+	</select>
+	
+<!-- 내정보와 내 미니홈피 통합조회 -->
+	<select id="myAllData" parameterClass="string" resultClass="mainVo">
+		select A.MEM_NAME, A.MEM_ID, A.MEM_DTR, A.MEM_MNM, B.DD_ADD, B.DD_PHOTO, C.ONE_COUNT, D.TODAY, D.TOTAL
+  		  from MEMBER A,
+       	       DD B,
+       		   (select count(*) as one_count from one where mem_id = #mem_id# and one_ing = '일촌') C,
+       		   (select TODAY, TOTAL 
+          		  from (select count(*) as TOTAL from visit A, dd B
+                 		 where A.DD_ADD = B.DD_ADD
+                   	  	   and B.MEM_ID = #mem_id#),
+      		   (select count(*) as TODAY from visit A, dd B where A.DD_ADD = B.DD_ADD
+           		   and B.MEM_ID = #mem_id# and visit_date = TO_CHAR(sysdate,'YYYYMMDD'))) D
+ 		 where A.MEM_ID = #mem_id#
+   		   and A.MEM_ID = B.MEM_ID
+	</select>
+
+<!-- 	id중복검사 -->
+	<select id="selectById" resultClass="String" parameterClass="String">
+		select MEM_ID from MEMBER where MEM_ID=#mem_id#
+	</select>
+	
+	<!-- id찾기 -->
+	<select id="selectId" resultClass="memberVo" parameterClass="memberVo">
+		select * from MEMBER where MEM_NAME = #mem_name# and MEM_TEL = #mem_tel#
+	</select>
+	
+	<!-- pw찾기 -->
+	<select id="selectPw" resultClass="memberVo" parameterClass="memberVo">
+		select * from MEMBER where MEM_ID = #mem_id# and MEM_TEL = #mem_tel# and MEM_NAME= #mem_name#
+	</select>
+	
+<!-- 	저장-회원가입  -->
+	<insert id="insertMember" parameterClass="memberVo">
+		insert into MEMBER(MEM_ID, MEM_PASS, MEM_NAME, MEM_GENDER, MEM_TEL, MEM_ZIP, MEM_ADD1,MEM_MAIL,MEM_CASH,MEM_TYPE,MEM_MNM)
+		values (#mem_id#, #mem_pass#, #mem_name#, #mem_gender#, #mem_tel#, #mem_zip#, #mem_add1#, #mem_mail#, 0, '회원', #mem_mnm#)
+		
+		<selectKey keyProperty="mem_id" resultClass="string">
+			select MEM_ID from member where MEM_ID = #mem_id#
+		</selectKey>
+	</insert>
+	
+	<insert id="insertMiniHompi" parameterClass="String">
+		INSERT INTO DD (DD_ADD, MEM_ID, DD_TITLE) 
+		VALUES (#mem_id#||'dd', 
+				#mem_id#, 
+                (SELECT MEM_NAME FROM MEMBER WHERE MEM_ID = #mem_id#)||'님의 미니홈피입니다.')
+	</insert>
+	
+	
+<!-- [ 내정보 수정하기  start] -->
+
+       <!-- 내정보 보여지는 select문 -->
+		<select id="myinfo" resultClass="memberVo" parameterClass="String">
+			select * from   member  where mem_id=#mem_id#
+		</select>
+	 
+	   <!-- 탈퇴버튼 : 회원타입 "비회원"으로 변경 -->
+	   <update id="myinfodelete" parameterClass="memberVo">
+	     update member 
+	        set mem_type='비회원'
+	      where mem_id=#mem_id#
+	   </update>
+	   
+	   <!-- 회원타입 비회원 될 경우 : 미니홈피 삭제  -->
+	   	<delete id="myminihomedelete" parameterClass="string">
+		 delete from dd where mem_id = #mem_id#
+		</delete>
+	
+	<!-- 회원타입 비회원 될 경우 : 일촌관계 삭제  -->		   
+	<delete id="myonedelete" parameterClass="string">
+		delete from ONE where MEM_ID = #mem_id# OR MEM_ID2 = #mem_id#
+	</delete>
+	
+<!-- [ 내정보 수정하기  end ] -->
+
+<!-- 일촌검사 -->
+	<select id="checkOne" parameterClass="oneVo" resultClass="string">
+		select ONE_ING from ONE where MEM_ID = #mem_id# and MEM_ID2 = #mem_id2#
+	</select>
+		
+<!-- 일촌신청 -->		
+	<insert id="insertRequestOne" parameterClass="oneVo">
+		insert into ONE (MEM_ID, MEM_ID2, ONE_NAME, ONE_ING) values (#mem_id#, #mem_id2#, #one_name#, '대기')
+	</insert>
+
+<!-- 일촌수락 -->
+	<update id="acceptOne" parameterClass="oneVo">
+		update ONE set ONE_ING = '일촌' where MEM_ID = #mem_id# and MEM_ID2 = #mem_id2#
+	</update>
+
+<!-- 일촌 수락후 인서트 -->
+	<insert id="insertAcceptOne" parameterClass="oneVo">
+		insert into ONE (MEM_ID, MEM_ID2, ONE_NAME, ONE_ING) values (#mem_id2#, #mem_id#, #one_name#, '일촌')
+	</insert>
+
+<!-- 일촌거절 -->
+	<delete id="denialOne" parameterClass="oneVo">
+		delete from ONE where MEM_ID = #mem_id# and MEM_ID2 = #mem_id2#
+	</delete>
+<!-- 일촌신청 취소 -->	
+	<delete id="cancelOne" parameterClass="oneVo">
+		delete from ONE where MEM_ID = #mem_id2# and MEM_ID2 = #mem_id#
+	</delete>
+
+
+
+
+<!-- 관리자 페이지 : 회원관리 : 회원보이기-->
+
+    <select id = "adminmemberview" resultClass="memberVo" >
+    	  select * from member where mem_type='회원'
+	</select>
+    <select id = "adminmemberview1" resultClass="memberVo" >
+    	  select * from member where mem_type='비회원'
+	</select>
+    <select id = "adminmemberview2" resultClass="memberVo" >
+    	  select * from member where mem_type='관리자'
+	</select>
+    
+
+
+</sqlMap>
+
+

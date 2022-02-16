@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap 
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0/EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- 이 문서는 iBatis에서 처리할 SQL문을 작성하는 문서입니다. -->
+
+<sqlMap namespace="minihome">	
+
+	
+	<!-- 내 미니홈피 프로필 보여주는 select문 -->
+	<select id="selectmyprofile" resultClass="provo" parameterClass="String">
+	   select * from profile where dd_add=#dd_add#
+	</select>
+	
+    <!-- 내 미니홈피 프로필 작성하는 merge문 (없으면 insert, 있으면 update) -->	
+	<update id="myprofilemerge" parameterClass="provo">	
+			 merge into profile
+			 using dual
+			 on(dd_add=#dd_add#)
+			 when matched then
+			 update set profile_con = #profile_con#
+			 where dd_add=#dd_add#			
+			
+			when not matched then
+			insert (profile_con,dd_add) 
+			values (#profile_con#,#dd_add#)		
+	</update>
+	
+	<!-- 사진첩 리스트 불러오기 -->
+	<select id="selectAllPhoto" parameterClass="string" resultClass="photoVo">
+		select * from PHOTO A 
+		where A.DD_ADD = #dd_add# 
+        order by A.PHOTO_NO desc
+<!-- 		select * from PHOTO A, PHOTO_RE B where A.DD_ADD = #dd_add#  -->
+<!-- 		                  and A.PHOTO_NO = B.PHOTO_NO(+) -->
+<!--         order by A.PHOTO_NO desc, B.PHOTO_RENUM desc; -->
+	</select>
+	
+	<select id="selectReList" parameterClass="int" resultClass="photoreVo">
+		select a.*, b.mem_name from PHOTO_RE a, member b
+		where PHOTO_NO = #photo_no# and a.mem_id = b.mem_id
+	</select>
+	
+	<!-- 사진첩 추가하기 -->	
+	<insert id="insertPhoto" parameterClass="photoVo">
+		insert into PHOTO values (photo_no_seq.nextval, #dd_add#, #photo_pt#, #photo_con#, TO_CHAR(sysdate,'YYYYMMDD'))
+	</insert>
+	
+	<!-- 사진첩 댓글 작성하기 : 로그인한 회원들만 -->
+    <insert id="photoinsertreply" parameterClass="photoreVo">
+    	   insert into PHOTO_RE values (photo_renum_seq.nextval,#photo_no#,sysdate,#photo_recon#,#mem_id#)
+    </insert>	
+	
+	<!-- 방명록 insert문 -->
+	<insert id="insertGbook" parameterClass="gbookVo">
+		insert into guest values(guest_no_seq.nextval, #dd_add#, #guest_con#, sysdate, #mem_id#)
+	</insert>
+	
+	<!-- 방명록 select문 -->
+	<select id="selectgbook" parameterClass="string" resultClass="gbookVo">
+		select A.*, NVL(B.GUEST_RENUM, 0) AS GUEST_RENUM, NVL(B.GUEST_NO, 0) AS GUEST_NO_1, B.GUEST_REDATE, B.GUEST_RECON
+		  from 
+			(select A.*, B.MEM_NAME, B.MEM_MNM 
+			   from GUEST A, MEMBER B 
+			  where A.DD_ADD = #dd_add# and A.MEM_ID = B.MEM_ID) A, GUEST_RE B 
+	     where A.DD_ADD = #dd_add# 
+	       and A.GUEST_NO = B.GUEST_NO(+)
+         order by A.GUEST_NO desc, B.GUEST_RENUM
+	</select>
+	
+	
+<!-- 	다이어리 -->
+<!-- 	<select id="selectDiary" parameterClass="diaryVo" resultClass="diaryVo"> -->
+<!-- 		select * from DIARY  -->
+<!-- 		 where to_char(DIARY_DATE, 'YYYYMMDD') like #diary_date#||'%'  -->
+<!-- 		   AND DD_ADD=#dd_add#  -->
+
+<!-- 	</select> -->
+
+	<select id="selectDiary" parameterClass="diaryVo" resultClass="diaryVo">
+ 		select *        
+ 		  from (select * from diary 
+ 		 		 where to_char(DIARY_DATE, 'YYYYMMDD') like #diary_date#||'%'
+ 		  		   AND DD_ADD=#dd_add#
+ 				 order by DIARY_DATE desc)
+ 		 where rownum = 1
+	</select>
+
+
+<!-- 다이어리 버튼 -->
+	<select id="inputbtnDay" parameterClass="diaryVo" resultClass="int">
+		select to_number(SUBSTR(to_char(DIARY_DATE, 'YYYYMMDD'),7,2)) from DIARY where to_char(DIARY_DATE, 'YYYYMMDD') like #diary_date#||'%' AND DD_ADD=#dd_add# 
+	</select>
+	
+<!-- 일기 insert --> 
+	<insert id="insertDiary" parameterClass="diaryVo">
+		insert into DIARY (DIARY_NO,DD_ADD,DIARY_CONT,DIARY_DATE,DIARY_TYPE)
+		values (DIARY_NO_SEQ.nextval,#dd_add#,#diary_cont#,sysdate,#diary_type#)
+	</insert>
+	
+<!-- 			merge into DIARY -->
+<!-- 			using dual -->
+<!-- 			on(to_char(DIARY_DATE, 'YYYYMMDD')=to_char(sysdate, 'YYYYMMDD') AND DD_ADD=#dd_add#) -->
+			 
+<!-- 			when not matched then -->
+<!-- 			insert into DIARY (DIARY_NO,DD_ADD,DIARY_CONT,DIARY_DATE,DIARY_TYPE) -->
+<!-- 			values (DIARY_NO_SEQ.nextval,#dd_add#,#diary_cont#,sysdate,#diary_type#)	 -->
+			 
+			 
+<!-- 			 when matched then -->
+<!-- 			 update DIARY set DIARY_CONT = #diary_cont#, -->
+<!-- 			 				  DIARY_TYPE = #diary_type# -->
+<!-- 			 where DIARY_NO=#diary_no#		 -->
+	
+	
+	
+
+<!-- 일기 insert --> 
+	<update id="updateDiary" parameterClass="diaryVo">	
+	
+			 update DIARY set DIARY_CONT = #diary_cont#,
+			 				  DIARY_TYPE = #diary_type#
+			 where DIARY_NO=#diary_no#			
+	</update>
+
+<!-- 일기 delete -->
+	<delete id="deleteDiary" parameterClass="int">
+		delete from DIARY where DIARY_NO = #diary_no#
+	</delete>
+	
+<!-- 	다이어리 리플 -->
+	<select id="selectDiaryRe" parameterClass="int" resultClass="diaryreVo">
+		select * from DIARY_RE where DIARY_NO=#diary_no#
+	</select>
+	
+<!-- 	다이어리 리플등록 -->
+	<insert id="insertDiaryRe" parameterClass="diaryreVo">
+		insert into DIARY_RE (DIARY_RENUM,DIARY_NO,DIARY_REDATE,DIARY_RECON,MEM_ID,MEM_NAME)
+		values (DIARY_RENUM_SEQ.nextval,#diary_no#,sysdate,#diary_recon#,#mem_id#,#mem_name#)
+	</insert>
+	
+<!-- 	다이어리 리플삭제 -->
+	<delete id="deleteDiaryRe" parameterClass="int">
+		delete from DIARY_RE where DIARY_RENUM = #diary_renum#
+	</delete>
+	
+<!-- 미니룸 출력 -->
+<!-- 		select SUBSTR((prod_num),1,4) AS prod_num, MINI_LEFT, MINI_TOP, PROD_NM, DD_ADD from MINIROOM  -->
+	<select id="miniSelect" parameterClass="miniVo" resultClass="miniVo">
+		select * from MINIROOM 
+		 WHERE DD_ADD=#dd_add# AND MINI_TYPE=#mini_type#
+	</select>
+	
+<!-- 미니룸 위치변경 -->
+	<update id="updateMiniroom" parameterClass="miniVo">
+		update MINIROOM set MINI_LEFT = #mini_left#,
+			 		     MINI_TOP = #mini_top#
+		where DD_ADD=#dd_add# AND MINI_TYPE='사용' AND PROD_NUM=#prod_num#
+	</update>
+
+	<update id="updateSetMiniroom" parameterClass="miniVo">
+		update MINIROOM set MINI_TYPE=#mini_type#
+		where DD_ADD=#dd_add# AND PROD_NUM=#prod_num#
+	</update>
+	
+
+</sqlMap>
+
+
+
+
+
+
+
+
+

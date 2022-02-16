@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="ddworld">
+
+	<select id="selectOneDD" parameterClass="string" resultClass="ddVo">
+		select A.MEM_ID, DD_ADD, DD_TITLE, DD_PHOTO, DD_CON, DD_SKIN, DD_EDGE, DD_MENU, MEM_NAME
+  		  from DD A, MEMBER B
+ 		 where A.MEM_ID = B.MEM_ID
+   		   and A.MEM_ID = #mem_id#
+	</select>
+	
+	<select id="selectAllDD" resultClass="ddVo">
+		select DD_ADD, A.MEM_ID, DD_TITLE, DD_PHOTO, DD_CON, DD_SKIN, DD_EDGE, DD_MENU, MEM_NAME
+ 		  from DD A, MEMBER B
+ 		 where A.MEM_ID = B.MEM_ID
+ 		 order by MEM_NAME
+	</select>
+	
+	<!-- 내가 일촌 신청한 사람 -->
+	<select id="selectCurrOne" parameterClass="string" resultClass="oneVo">
+		select b.mem_name, a.mem_id, a.one_name, c.dd_title 
+		  from one a, member b, dd c
+		 where mem_id2 = #mem_id# and a.mem_id = b.mem_id and a.mem_id = c.mem_id and a.one_ing='대기' 
+	</select>
+	
+	<!-- 나에게 일촌 신청한 사람 -->
+	<select id="selectCurr2One" parameterClass="string" resultClass="oneVo">
+		select b.mem_name, a.mem_id2, a.one_name, c.dd_title 
+		  from one a, member b, dd c
+		 where a.mem_id = #mem_id# and a.mem_id2 = b.mem_id and a.mem_id2 = c.mem_id and a.one_ing='대기' 
+	</select>
+	
+	<select id="selectAllOne" parameterClass="string" resultClass="oneVo">
+		select MEM_ID2, ONE_NAME, MEM_NAME, ONE_CON, DD_TITLE, ONE_CONNUM
+		  from ONE A, MEMBER B, DD C where A.MEM_ID2 = B.MEM_ID 
+		   and A.MEM_ID2 = C.MEM_ID and A.MEM_ID = #mem_id# and A.ONE_ING = '일촌'
+		 order by A.ONE_CONNUM desc  
+	</select>
+	
+	<select id="countVisit" parameterClass="string" resultClass="visitVo">
+		select TODAY, TOTAL
+  		  from (select count(*) as TOTAL from visit A, dd B
+										where A.DD_ADD = B.DD_ADD and B.MEM_ID = #mem_id#),
+       		   (select count(*) as TODAY from visit A, dd B
+       		   							where A.DD_ADD = B.DD_ADD
+										  and B.MEM_ID = #mem_id#
+										  and visit_date = TO_CHAR(sysdate,'YYYYMMDD'))
+	</select>
+	
+	<insert id="insertVisit" parameterClass="string">
+		insert into visit
+	    values ((select dd_add from dd where mem_id = #mem_id#),
+	    	     TO_CHAR(sysdate,'YYYYMMDD'),
+	    	    (select NVL(MAX(VISIT_NUM), 0) + 1 from VISIT))
+	</insert>
+
+	<update id="updateDDColor" parameterClass="ddVo">
+		update DD set DD_EDGE = #dd_edge#, DD_MENU = #dd_menu#, DD_SKIN = #dd_skin# where dd_add = #dd_add#
+	</update>
+	
+	<update id="updateDDMain" parameterClass="ddVo">
+		update DD set DD_TITLE = #dd_title#, DD_CON = #dd_con#, DD_PHOTO = #dd_photo# where MEM_ID = #mem_id#
+	</update>
+
+	<update id="updateOneCon" parameterClass="oneVo">
+		update ONE set ONE_CONNUM = (select max(ONE_CONNUM) from ONE where MEM_ID = #mem_id#)+1,
+               ONE_CON = #one_con#
+		  where MEM_ID = #mem_id# and MEM_ID2 = #mem_id2#
+	</update>	
+	
+	<update id="setNullOneCon" parameterClass="oneVo">
+		update ONE set ONE_CON = null where MEM_ID = #mem_id# and MEM_ID2 = #mem_id2#
+	</update>
+	
+	
+	<select id="selectSkinById" parameterClass="string" resultClass="skinVo">
+		select A.ORD_NUM, A.MEM_ID, B.PROD_NM, B.PROD_CON
+          from ORD A, PROD B 
+         where A.MEM_ID = #mem_id#
+           and A.PROD_NUM = B.PROD_NUM 
+           and A.PROD_NUM like 'P201%'
+         order by 1 desc
+	</select>
+</sqlMap>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="board">
+
+    <!-- 공지사항 게시판 관련  -->
+	<select id="selectAllNotice" resultClass="noticeVo">
+		select * from NOTICE order by 1 desc
+	</select>
+
+	<select id="selectOneNotice" parameterClass="int" resultClass="noticeVo">
+		select * from NOTICE where NOTICE_NUM = #notic_num#
+	</select>
+	
+	<insert id="insertNotice" parameterClass="noticeVo">
+		insert into NOTICE values (notice_num_seq.nextval, #notice_title#, #notice_con#, #admin_id#, 0)
+	</insert>
+	
+	<!-- 공지사항게시판 : 글 수정하기 : 관리자만 -->
+	<update id="updatenotice" parameterClass="noticeVo">    
+       update NOTICE 
+          set notice_title=#notice_title#,
+              notice_con=#notice_con#
+        where notice_num=#notice_num#    
+    </update>
+
+
+    <!-- 문의게시판 관련 -->
+    <!-- 문의게시판 전체 리스트 보여주기 ! -->
+    <select id= "selectAllFaq" resultClass="faqVo">
+         select * from faq order by 1 desc
+    </select>
+    
+    <!-- 문의게시판 : 제목 클릭 해서 상세보기  -->
+    <select id= "selectonefaq" parameterClass="int" resultClass="faqVo">
+         select * from faq where faq_num=#faq_num#
+    </select>
+    
+    <!-- 문의게시판 : 글쓰기 작성 : 회원만 ! -->
+    
+    <insert id="insertfaq" parameterClass="faqVo">
+         insert into faq 
+                     values 
+                    (faq_num.nextval, 
+                    #faq_title#, 
+                    #faq_con#,
+                    sysdate,
+                    #mem_id#)
+    </insert>
+    
+    <!-- 문의게시판 수정 -->
+    <update id="updatefaq" parameterClass="faqVo">    
+       update faq 
+          set faq_title=#faq_title#,
+              faq_con=#faq_con#
+        where faq_num=#faq_num#    
+    </update>
+
+    <!-- 문의 게시판 댓글 작성 : 관리자만  -->    
+   	<insert id="insertfaqreply" parameterClass="faqreVo">
+		insert into faq_re
+		     values (faq_renum_seq.nextval, sysdate,#faq_recon#, #admin_id#,#faq_num#)
+	</insert>
+    
+    <!-- 문의 게시판 답글 보여주기 !  -->
+    <select id = "selectfaqreply" parameterClass="int" resultClass="faqreVo">
+        select * from faq_re where faq_num=#faq_num#
+        order by faq_redate
+    </select>
+    
+    
+    
+
+</sqlMap>
