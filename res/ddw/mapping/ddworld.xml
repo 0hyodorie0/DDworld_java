@@ -57,6 +57,15 @@
 	    	    (select NVL(MAX(VISIT_NUM), 0) + 1 from VISIT))
 	</insert>
 
+	<insert id="insertGuestRe" parameterClass="gbookVo">
+		insert into GUEST_RE values (guest_re_seq.nextval, #guest_no#, sysdate, #guest_recon#)
+	</insert>
+	
+	<delete id="deleteGuestRe" parameterClass="int">
+		delete from GUEST_RE where GUEST_RENUM = #guest_renum#
+	</delete>
+
+
 	<update id="updateDDColor" parameterClass="ddVo">
 		update DD set DD_EDGE = #dd_edge#, DD_MENU = #dd_menu#, DD_SKIN = #dd_skin# where dd_add = #dd_add#
 	</update>
