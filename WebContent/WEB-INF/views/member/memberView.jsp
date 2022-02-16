@@ -31,7 +31,7 @@
 <div class="notice">
 	<div class="container-fluid page_header">
  	<div class="container d-flex h-100 justify-content-center align-items-center">
- 	<a class="position-absolute header_logo" href="<%=request.getContextPath()%>/jsp/main_shs.jsp"><img alt="" src="<%=request.getContextPath() %>/images/logo/3.jpg"></a>
+ 	<a class="position-absolute header_logo" href="crossGoMain.do"><img alt="" src="<%=request.getContextPath() %>/images/logo/3.jpg"></a>
 <h3 class="text-center page_title">회원정보</h3>
  	</div>
   
