@@ -5,6 +5,7 @@ import java.util.List;
 import ddw.vo.DdVO;
 import ddw.vo.FaqVO;
 import ddw.vo.FaqreVO;
+import ddw.vo.GbookVO;
 import ddw.vo.MainVO;
 import ddw.vo.MemberVO;
 import ddw.vo.NoticeVO;
@@ -49,6 +50,12 @@ public interface IDDWorldDao {
 	
 	/* 모든 미니홈피 리스트 불러오기(검색없음) */
 	public List<DdVO> selectAllDD();	
+	
+	/* 방명록 댓글 */
+	public void insertGuestRe(GbookVO vo);
+	
+	/* 방명록 댓글 삭제 */
+	public void deleteGuestRe(int guest_renum);
 	
 	/* 일촌 검사 */
 	public String checkOne(OneVO vo);
@@ -173,6 +180,10 @@ public interface IDDWorldDao {
 	
 	/* 미니홈피 주인의 스킨 리스트 */
 	public List<SkinVO> selectSkinById(String mem_id);	
+	
+	
+	/* 도토리 증정 */
+	public void updateGiveDotori (MemberVO vo);
 }
 
 

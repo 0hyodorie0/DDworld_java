@@ -9,6 +9,7 @@ import ddw.util.SqlMapClientFactory;
 import ddw.vo.DdVO;
 import ddw.vo.FaqVO;
 import ddw.vo.FaqreVO;
+import ddw.vo.GbookVO;
 import ddw.vo.MainVO;
 import ddw.vo.MemberVO;
 import ddw.vo.NoticeVO;
@@ -601,6 +602,33 @@ public class DDWorldDaoImpl implements IDDWorldDao {
 	public void updateDDMain(DdVO vo) {
 		try {
 			client.update("ddworld.updateDDMain", vo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override/* 방명록 댓글 */
+	public void insertGuestRe(GbookVO vo) {
+		try {
+			client.insert("ddworld.insertGuestRe", vo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override/* 방명록 댓글 삭제 */
+	public void deleteGuestRe(int guest_renum) {
+		try {
+			client.delete("ddworld.deleteGuestRe", guest_renum);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override/* 도토리 증정 */
+	public void updateGiveDotori(MemberVO vo) {
+		try {
+			client.update("member.updateGiveDotori", vo);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

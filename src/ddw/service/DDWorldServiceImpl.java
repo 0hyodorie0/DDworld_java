@@ -7,6 +7,7 @@ import ddw.dao.IDDWorldDao;
 import ddw.vo.DdVO;
 import ddw.vo.FaqVO;
 import ddw.vo.FaqreVO;
+import ddw.vo.GbookVO;
 import ddw.vo.MainVO;
 import ddw.vo.MemberVO;
 import ddw.vo.NoticeVO;
@@ -278,6 +279,21 @@ public class DDWorldServiceImpl implements IDDWorldService{
 	@Override/* 미니홈 주변 메인 변경*/
 	public void updateDDMain(DdVO vo) {
 		dao.updateDDMain(vo);
+	}
+
+	@Override/* 방명록 댓글 */
+	public void insertGuestRe(GbookVO vo) {
+		dao.insertGuestRe(vo);
+	}
+
+	@Override/* 방명록 댓글 삭제 */
+	public void deleteGuestRe(int guest_renum) {
+		dao.deleteGuestRe(guest_renum);
+	}
+
+	@Override/* 도토리 증정 */
+	public void updateGiveDotori(MemberVO vo) {
+		dao.updateGiveDotori(vo);
 	}
 
 

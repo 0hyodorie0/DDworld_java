@@ -5,6 +5,7 @@ import java.util.List;
 import ddw.vo.DdVO;
 import ddw.vo.FaqVO;
 import ddw.vo.FaqreVO;
+import ddw.vo.GbookVO;
 import ddw.vo.MainVO;
 import ddw.vo.MemberVO;
 import ddw.vo.NoticeVO;
@@ -93,6 +94,12 @@ public interface IDDWorldService {
 	
 	
 	//미니홈피 관련------------------------------------------
+	/* 방명록 댓글 */
+	public void insertGuestRe(GbookVO vo);
+	
+	/* 방명록 댓글 삭제 */
+	public void deleteGuestRe(int guest_renum);
+	
 	
 	/* 회원 id로 미니홈피 데이터 불러오기 */
 	public DdVO selectOneDD(String mem_id);
@@ -168,6 +175,11 @@ public interface IDDWorldService {
 	
 	/* 미니홈피 주인의 스킨 리스트 */
 	public List<SkinVO> selectSkinById(String mem_id);
+	
+	
+	
+	/* 도토리 증정 */
+	public void updateGiveDotori (MemberVO vo);
 }
 
 

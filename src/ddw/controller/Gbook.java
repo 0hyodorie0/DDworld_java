@@ -2,15 +2,18 @@ package ddw.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ddw.service.MiniHomeService;
 import ddw.service.MiniHomeServiceImpl;
+import ddw.vo.DdVO;
 import ddw.vo.GbookVO;
 
 
@@ -21,8 +24,17 @@ public class Gbook extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1. 클라이언트 요청시 전송데이터 받기
-		String dd_add = request.getParameter("dd_add");
-		System.out.println("지북 서블릿이 보낸 ddadd===========" +dd_add);
+		//String dd_add = request.getParameter("dd_add");
+		//System.out.println("지북 서블릿이 보낸 ddadd===========" +dd_add);
+		
+		HttpSession session = request.getSession();
+		
+		Map<String, String> keys = (Map<String, String>) session.getAttribute("keys");
+		String keyDdworld = keys.get("keyDdworld");
+		
+		DdVO ddvo = (DdVO)session.getAttribute(keyDdworld);
+		
+		String dd_add = ddvo.getDd_add();
 		
 		//2. service 객체 얻기
 		MiniHomeService service = MiniHomeServiceImpl.getInstance();
