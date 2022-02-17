@@ -14,6 +14,7 @@ import ddw.vo.NoticeVO;
 import ddw.vo.OneVO;
 import ddw.vo.PhotoVO;
 import ddw.vo.PhotoreVO;
+import ddw.vo.ProdVO;
 import ddw.vo.SkinVO;
 import ddw.vo.VisitVO;
 
@@ -291,10 +292,22 @@ public class DDWorldServiceImpl implements IDDWorldService{
 		dao.deleteGuestRe(guest_renum);
 	}
 
+
+	@Override
+	public int dtrUpdatemini(MemberVO vo) {
+		return dao.dtrUpdatemini(vo);
+	}
+
 	@Override/* 도토리 증정 */
 	public void updateGiveDotori(MemberVO vo) {
 		dao.updateGiveDotori(vo);
 	}
+
+	@Override
+	public void insertProd(ProdVO vo) {
+		dao.insertProd(vo);
+	}
+
 
 
 

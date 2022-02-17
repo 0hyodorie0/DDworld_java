@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import ddw.service.MiniHomeService;
 import ddw.service.MiniHomeServiceImpl;
 import ddw.vo.DdVO;
+import ddw.vo.MemberVO;
 import ddw.vo.MiniVO;
 
 /**
@@ -36,6 +37,7 @@ public class MiniroomSetup extends HttpServlet {
 //		DdVO ddvo = (DdVO)session.getAttribute(keyDdworld);
 		
 //		String dd_add = ddvo.getDd_add();
+		MemberVO loginMember =  (MemberVO)session.getAttribute("loginMember");
 		
 		MiniHomeService service = MiniHomeServiceImpl.getInstance();
 		
@@ -48,7 +50,7 @@ public class MiniroomSetup extends HttpServlet {
 		
 		if(pnum.equals("P601")) {
 			MiniVO vo4 = new MiniVO();
-			vo4.setDd_add("test01dd");
+			vo4.setDd_add(loginMember.getMem_id()+"dd");
 			vo4.setMini_type("보유");
 			vo4.setProd_num(backgr);
 			
@@ -59,7 +61,7 @@ public class MiniroomSetup extends HttpServlet {
 		System.out.println("  33"+backgr);
 		
 		MiniVO vo3 = new MiniVO();
-		vo3.setDd_add("test01dd");
+		vo3.setDd_add(loginMember.getMem_id()+"dd");
 		vo3.setMini_type(minitype);
 		vo3.setProd_num(prodnum);
 		

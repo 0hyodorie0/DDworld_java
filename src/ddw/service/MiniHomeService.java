@@ -61,4 +61,11 @@ public interface MiniHomeService {
 	
 	//미니룸 템수정
 	public int updateSetMiniroom(MiniVO vo);
+	
+	//상품 구매 미니룸에 등록
+	public int insertprodMem(MiniVO vo);
+	
+	//상품 중복 카운트	
+	public int countMiniprod(String pnum);
+	
 }

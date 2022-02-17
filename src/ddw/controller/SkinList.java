@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import ddw.service.DDWorldServiceImpl;
 import ddw.service.IDDWorldService;
@@ -35,13 +37,22 @@ public class SkinList extends HttpServlet {
 		List<SkinVO> list =  service.selectSkinById(mem_id);
 		
 		//4. 결과값으로 json데이터 생성
-		Gson gson = new Gson();
-		String result = gson.toJson(list);
-		
 		response.setContentType("application/json; charset=UTF-8"); 
 		PrintWriter out = response.getWriter();
+		JsonObject obj = new JsonObject();
 		
-		out.print(result);
+		Gson gson = new Gson();
+		
+		if(list == null || list.size()==0) {
+			obj.addProperty("sw", "no");
+		}else {//스킨 리스트 데이터가 있을때
+			obj.addProperty("sw", "yes");
+			
+			JsonElement ele = gson.toJsonTree(list);
+			obj.add("datas", ele);
+		}
+		
+		out.print(obj);
 	}
 
 

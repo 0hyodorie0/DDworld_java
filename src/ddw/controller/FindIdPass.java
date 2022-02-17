@@ -57,6 +57,8 @@ public class FindIdPass extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/member/foundId.jsp").forward(request, response);
 			}else {
 				//아이디 찾기 실패 == 데이터가 없음
+				request.getRequestDispatcher("/WEB-INF/views/member/foundfail.jsp").forward(request, response);
+				
 				System.out.println("데이터 없음");
 			}
 		}else {
@@ -89,6 +91,7 @@ public class FindIdPass extends HttpServlet {
 			      
 			}else {
 				//비번 찾기 실패 == 데이터가 없음
+				request.getRequestDispatcher("/WEB-INF/views/member/foundfail.jsp").forward(request, response);
 				System.out.println("데이터 없음");
 			}
 		}

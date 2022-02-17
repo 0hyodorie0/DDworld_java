@@ -12,6 +12,7 @@ import ddw.vo.NoticeVO;
 import ddw.vo.OneVO;
 import ddw.vo.PhotoVO;
 import ddw.vo.PhotoreVO;
+import ddw.vo.ProdVO;
 import ddw.vo.SkinVO;
 import ddw.vo.VisitVO;
 
@@ -46,7 +47,9 @@ public interface IDDWorldService {
 	/* (임시)공지사항 상세 출력 */
 	public NoticeVO selectOneNotice(int notice_num);
 	
-	
+	//상품구매 도토리변경
+	public int dtrUpdatemini(MemberVO vo);
+		
 	//메인 관련------------------------------------------
 	
 	/* 모든 미니홈피 리스트 불러오기(검색없음) */
@@ -91,7 +94,7 @@ public interface IDDWorldService {
 	/* 공지사항 : 글 수정하기 */
 	public int updateNotice(NoticeVO vo);
 	
-	
+	public void insertProd(ProdVO vo);
 	
 	//미니홈피 관련------------------------------------------
 	/* 방명록 댓글 */

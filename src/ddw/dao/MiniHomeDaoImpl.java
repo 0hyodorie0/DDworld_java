@@ -238,4 +238,32 @@ public class MiniHomeDaoImpl implements MiniHomeDao {
 		}
 		return cnt;
 	}
+
+	@Override
+	public int insertprodMem(MiniVO vo) {
+		int cnt = 0;
+		try {
+			Object obj = smc.insert("minihome.insertprodMem", vo);
+			if(obj==null) {
+				cnt = 1;
+			}
+			
+		} catch (SQLException e) {
+			cnt = 0;
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int countMiniprod(String pnum) {
+		int cnt = 0;
+		
+		try {
+			cnt = (int) smc.queryForObject("minihome.countMiniprod", pnum);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cnt;
+	}
 }

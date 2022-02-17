@@ -101,6 +101,16 @@ public class MiniHomeServiceImpl implements  MiniHomeService{
 		return dao.updateSetMiniroom(vo);
 	}
 
+	@Override
+	public int insertprodMem(MiniVO vo) {
+		return dao.insertprodMem(vo);
+	}
+
+	@Override
+	public int countMiniprod(String pnum) {
+		return dao.countMiniprod(pnum);
+	}
+
 
 
 

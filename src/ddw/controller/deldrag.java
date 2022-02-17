@@ -13,12 +13,15 @@ import ddw.service.MiniHomeService;
 import ddw.service.MiniHomeServiceImpl;
 import ddw.vo.MiniVO;
 
+/**
+ * Servlet implementation class deldrag
+ */
 @WebServlet("/deldrag.do")
 public class deldrag extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+	request.setCharacterEncoding("UTF-8");
 		
 		String ddadd = request.getParameter("ddadd");
 	
@@ -41,7 +44,7 @@ public class deldrag extends HttpServlet {
 		
 		request.setAttribute("list", list);
 		request.setAttribute("list2", list2);
-		request.getRequestDispatcher("jsp/deldrag.jsp").forward(request, response);
+		request.getRequestDispatcher("jsp/miniroomSetting.jsp").forward(request, response);
 		
 		
 //		Gson gson = new Gson();
@@ -56,10 +59,14 @@ public class deldrag extends HttpServlet {
 //		
 //		out.println(result);
 	
-	
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

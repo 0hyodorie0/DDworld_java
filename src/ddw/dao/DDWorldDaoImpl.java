@@ -16,6 +16,7 @@ import ddw.vo.NoticeVO;
 import ddw.vo.OneVO;
 import ddw.vo.PhotoVO;
 import ddw.vo.PhotoreVO;
+import ddw.vo.ProdVO;
 import ddw.vo.SkinVO;
 import ddw.vo.VisitVO;
 
@@ -625,6 +626,23 @@ public class DDWorldDaoImpl implements IDDWorldDao {
 		}
 	}
 
+
+	@Override
+	public int dtrUpdatemini(MemberVO vo) {
+		int cnt = 0;
+		try {
+			Object obj = client.update("member.dtrUpdatemini", vo);
+			if(obj==null) {
+				cnt = 1;
+			}
+			
+		} catch (SQLException e) {
+			cnt = 0;
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+
 	@Override/* 도토리 증정 */
 	public void updateGiveDotori(MemberVO vo) {
 		try {
@@ -633,6 +651,16 @@ public class DDWorldDaoImpl implements IDDWorldDao {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void insertProd(ProdVO vo) {
+		try {
+			client.insert("minihome.insertProd", vo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 
 

@@ -48,6 +48,8 @@ public interface IDDWorldDao {
 
 	//메인 관련------------------------------------------
 	
+	public void insertProd(ProdVO vo);
+	
 	/* 모든 미니홈피 리스트 불러오기(검색없음) */
 	public List<DdVO> selectAllDD();	
 	
@@ -86,8 +88,8 @@ public interface IDDWorldDao {
 	/* 미니홈 주변 메인 변경*/
 	public void updateDDMain(DdVO vo);
 	
-	
-	
+	//상품구매 도토리변경
+	public int dtrUpdatemini(MemberVO vo);
 	
 	
 	//공지사항 관련----------------------------------------------------

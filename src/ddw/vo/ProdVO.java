@@ -7,7 +7,21 @@ public class ProdVO {
 	private String prod_con;
 	private String prod_pa ;
 	private String lprod_gu;
+	private String mem_id;
 	
+	
+	/**
+	 * @return the mem_id
+	 */
+	public String getMem_id() {
+		return mem_id;
+	}
+	/**
+	 * @param mem_id the mem_id to set
+	 */
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
 	public String getProd_num() {
 		return prod_num;
 	}

@@ -8,9 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ddw.dao.DDWorldDaoImpl;
+import ddw.dao.IDDWorldDao;
 import ddw.service.DDWorldServiceImpl;
 import ddw.service.IDDWorldService;
+import ddw.service.MiniHomeService;
+import ddw.service.MiniHomeServiceImpl;
 import ddw.vo.MemberVO;
+import ddw.vo.MiniVO;
 
 @WebServlet("/joinMember.do")
 public class JoinMember extends HttpServlet {
@@ -28,10 +33,14 @@ public class JoinMember extends HttpServlet {
 		String pass = request.getParameter("mem_pass");
 		String gender = request.getParameter("mem_gender");
 		String mnm = null;
+		String minidef = null;
+		
 		if(gender.equals("여")) {
 			mnm = "default_f.png";
+			minidef ="P401defaultf";
 		}else {
 			mnm = "default_m.png";
+			minidef = "P401defaultm";
 		}
 		
 //		int birth = Integer.parseInt(request.getParameter("mem_birth"));
@@ -59,6 +68,25 @@ public class JoinMember extends HttpServlet {
 		String sid = service.insertMember(vo);
 		//미니홈피 생성
 		int mcnt = service.insertMiniHompi(id);
+		
+		
+		MiniVO vo2 = new MiniVO();
+		vo2.setDd_add(id+"dd");
+		vo2.setProd_num("P601default");
+		vo2.setProd_nm("기본룸.jpg");
+		vo2.setMini_type("사용");
+		
+		MiniHomeService service2 = MiniHomeServiceImpl.getInstance();
+		
+		int cnt = service2.insertprodMem(vo2);
+		
+		MiniVO vo3 = new MiniVO();
+		vo3.setDd_add(id+"dd");
+		vo3.setProd_num(minidef);
+		vo3.setProd_nm(mnm);
+		vo3.setMini_type("사용");
+		
+		int cnt2 = service2.insertprodMem(vo3);
 		
 		request.setAttribute("sid", sid);
 //		request.setAttribute("mcnt", mcnt);

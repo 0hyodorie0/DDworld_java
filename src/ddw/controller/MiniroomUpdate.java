@@ -7,9 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ddw.service.MiniHomeService;
 import ddw.service.MiniHomeServiceImpl;
+import ddw.vo.MemberVO;
 import ddw.vo.MiniVO;
 
 @WebServlet("/miniroomUpdate.do")
@@ -21,9 +23,7 @@ public class MiniroomUpdate extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
-//		HttpSession session = request.getSession();
-//		
+		HttpSession session = request.getSession();
 //		Map<String, String> keys = (Map<String, String>) session.getAttribute("keys");
 //		String keyDdworld = keys.get("keyDdworld");
 //		
@@ -31,7 +31,7 @@ public class MiniroomUpdate extends HttpServlet {
 //		
 //		String dd_add = ddvo.getDd_add();
 		
-		
+		MemberVO loginMember = (MemberVO)session.getAttribute("loginMember");	
 		
 		int minicode = Integer.parseInt(request.getParameter("minicode"));
 		
@@ -41,7 +41,7 @@ public class MiniroomUpdate extends HttpServlet {
 		
 		
 		MiniVO vo = new MiniVO();
-		vo.setDd_add("test01dd");
+		vo.setDd_add(loginMember.getMem_id()+"dd");
 		vo.setProd_num(prodnum);
 		vo.setMini_left(minileft);
 		vo.setMini_top(minitop);
