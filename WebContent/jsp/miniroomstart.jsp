@@ -10,7 +10,7 @@
 $(function(){
 // 	$('input[type=button]').on('click', function(){
 // 		location.href = "/ddWorld/miniroomSelect.do";
-		location.href = "/ddWorld/miniroomSetselect.do";
+		location.href = "/ddWorld/deldrag.do";
 // 	})
 })
 </script>

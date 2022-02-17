@@ -52,57 +52,65 @@
         <section class="col-8 main_section main_cont">
             <div class="card_area card_area_lg">
                 <div class="card">
+                  <a href="<%=request.getContextPath() %>/jsp/storeMain.jsp" class="card-link">
                     <div class="card-body">
                         <h5 class="card-title">상점</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">미니홈피를 꾸밀 수 있는 아이템을 구매하세요!</h6>
                         <p class="card-text"></p>
-                        <a href="<%=request.getContextPath() %>/jsp/storeMain.jsp" class="card-link">상점 가기</a>
-                        
+                        		<br>상점 가기
                     </div>
+                  </a>
                 </div>
             </div>
             <div class="card_area">
                 <div class="card">
+                  <a href="<%=request.getContextPath() %>/jsp/dotoriStore.jsp" class="card-link">
                     <div class="card-body">
                         <h5 class="card-title">도토리</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">디디월드에서는 도로리를 사용해요!</h6>
                         <p class="card-text"></p>
-                        <a href="<%=request.getContextPath() %>/jsp/dotoriStore.jsp" class="card-link">도토리 가기</a>
-                        <!-- <a href="#" class="card-link">Another link</a> -->
+                       		 <br>도토리 가기
                     </div>
+                  </a>
                 </div>
             </div>
             <div class="card_area">
                 <div class="card">
+                  <a href="/ddWorld/listDD.do" class="card-link">
                     <div class="card-body">
                         <h5 class="card-title">미니홈피 가기</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">디디월드 회원들의 미니홈피를 구경해보세요!</h6>
                         <p class="card-text"></p>
-                        <a href="/ddWorld/listDD.do" class="card-link">미니홈피 리스트</a>
+                        		<br>미니홈피 리스트
                         <!-- <a href="#" class="card-link">Another link</a> -->
                     </div>
+                  </a>
                 </div>
             </div>
             <div class="card_area card_area_lg">
                 <div class="card">
+                  <a href="<%=request.getContextPath() %>/faq.do" class="card-link">
                     <div class="card-body">
                         <h5 class="card-title">고객센터</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">궁금하신 점은 여기에 물어보세요!</h6>
                         <p class="card-text"></p>
-                        <a href="<%=request.getContextPath() %>/faq.do" class="card-link">고객센터 가기</a>
+                        		<br>고객센터 가기
                         <!-- <a href="#" class="card-link">Another link</a> -->
                     </div>
+                  </a>
                 </div>
             </div>
             <div class="card_area card_area_full">
                 <div class="card">
+                  <a href="/ddWorld/notice.do" class="card-link">
                     <div class="card-body">
                         <h5 class="card-title">공지사항</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">디디월드에서 회원님께 전달드려요!</h6>
                         <p class="card-text"></p>
-                        <a href="/ddWorld/notice.do" class="card-link">공지사항</a>
+                        		<br>공지사항
                         <!-- <a href="#" class="card-link">Another link</a>  -->
                     </div>
+                  </a>
                 </div>
             </div>
         </section>

@@ -110,16 +110,40 @@ $(function(){
             <div class="col-6">
                 <table border="1" class="table">
                     <tr>
-                        <td><a href="">싸이브금</a></td>
-                        <td><a href="">랩/힙합</a></td>
+                        <td style="background-color:#96a3a3; font-weight:bold; text-align: center;">주  인</td>
+                        <td style="padding-left:15px;"><a href="#"><%=ddvo.getMem_name() %></a></td>
                     </tr>
                     <tr>
-                        <td><a href="">박명호</a></td>
-                        <td><a href="">abcdefg</a></td>
+                        <td style="background-color:#96a3a3; font-weight:bold; text-align: center;">방문자</td>
+                        <td style="padding-left:15px;">
+                          <a href="#">
+                        <%if(loginMember != null){ %>
+                        		<%=loginMember.getMem_name() %>
+                        <%}else{ %>
+                        		'비회원'
+                        <%} %>
+                          </a>
+                        </td>
                     </tr>
                     <tr>
-                        <td><a href="">2002</a></td>
-                        <td><a href="">2021</a></td>
+                        <td style="background-color:#96a3a3; font-weight:bold; text-align: center;">일촌상태</td>
+                        <td style="padding-left:15px;">
+	                      <a href="#">
+	                      <%if(oneChk == 0){%>
+	                      		'비회원'
+	                      <%}else if(oneChk == 1){%>
+	                      		'일촌 방문자'
+	                      <%}else if(oneChk == 2){%>
+	                      		'일촌신청 대기 중'
+	                      <%}else if(oneChk == 3){%>
+	                      		'일촌신청 대기 중'
+	                      <%}else if(oneChk == 4){%>
+	                      		'일반 방문자'
+	                      <%}else{%>
+	                      		'본인'
+	                      <%}%>
+	                      </a>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -127,7 +151,14 @@ $(function(){
     </section>
     <section>
         <h3 class="section_title">Miniroom</h3>
+    	<% 	   
+    	if(loginMember!=null && ddvo.getDd_add().equals(loginMember.getMem_id()+"dd")) {
+    	
+		%> 
         <input type="button" value="미니룸 설정" class="float-right" id="miniroomset">
+         <%
+        	}
+        %>
         <div class="miniroom">
             
 <!--             <iframe src="./miniroom.jsp" name="miniroom"  class=""> -->

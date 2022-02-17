@@ -3,16 +3,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/dsstyle2.css">
+    <title>drag</title>
+<script type="text/javascript" src="<%=request.getContextPath()%>/Slider/js/vinyli.viSimpleSlider.js"></script>
+<script src="<%=request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+
 <script src="<%=request.getContextPath()%>/js/jquery-1.12.4.js"></script>
 <script src="<%=request.getContextPath()%>/js/1.12.1-jquery-ui.js"></script>
-<script src="<%=request.getContextPath() %>/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/style.css">
 <script> 
 $(function(){ 
 	$(".mini img").draggable({
@@ -72,7 +74,7 @@ $(function(){
     	
     })
     
-    $(".mini2 img").dblclick(function () {
+    $("img").dblclick(function () {
     	var backgr = $('.background').attr("id");
     	
     	 targetO2 = $(this);
@@ -90,6 +92,7 @@ $(function(){
 	
 }); 
 </script>
+
 <style>
 .mini{
  position:relative; 
@@ -113,11 +116,11 @@ height : 100px;
 }
 </style>
 
-<body class="p-3 sub">
-<h3 class="section_title">Miniroom Setting</h3>
-<h4>적용 화면</h4>
-하단의 보유 아이템을 더블 클릭시, 적용화면으로 들어옵니다!
+</head>
+
+<body>
 <div class="mini">
+
 <%
 	List<MiniVO> list = (List<MiniVO>) request.getAttribute("list");
 		for(int i=0; i<list.size(); i++) {
@@ -147,61 +150,69 @@ height : 100px;
 		} 
 %>		
 </div>
-<br><br>
-<h4>보유 아이템</h4>
-미니룸
-<div class="mini2">
+
+
+
+    <div class="slider">
+        <div class="slider-inner">
+        
+        
 <%
 	List<MiniVO> list2 = (List<MiniVO>) request.getAttribute("list2");
 %>
-	<ul>
-	<%
-			for(int i=0; i<list2.size(); i++) {
-				MiniVO vo2 = list2.get(i);
-				String pnum2 = (vo2.getProd_num()).substring(0,4);
-				if(pnum2.equals("P601")){
-	%>		
-		<li>
-				<img class="background2" id="<%=vo2.getProd_num() %>" src="<%=request.getContextPath()%>/images/miniroom/<%=vo2.getProd_nm() %>">
-		</li>
-	<%}} %>
-	</ul>
-</div>
-<hr>
-	
-미니콘
-<div class="mini2">	
-	<ul>
-	<%
-			for(int i=0; i<list2.size(); i++) {
-				MiniVO vo2 = list2.get(i);
-				String pnum2 = (vo2.getProd_num()).substring(0,4);
-				if(pnum2.equals("P501")){
-	%>		
-		<li>
-				<img class="minicon" id="<%=vo2.getProd_num() %>" src="<%=request.getContextPath()%>/images/minicon/<%=vo2.getProd_nm() %>">
-		</li>
-	<%}} %>
-	</ul>
-</div>
-<hr>
-	
-미니미
-<div class="mini2">	
-	<ul>
-	<%
-			for(int i=0; i<list2.size(); i++) {
-				MiniVO vo2 = list2.get(i);
-				String pnum2 = (vo2.getProd_num()).substring(0,4);
-				if(pnum2.equals("P401")){
-	%>		
-		<li>
-				<img class="minimi" id="<%=vo2.getProd_num() %>" src="<%=request.getContextPath()%>/images/minimi/<%=vo2.getProd_nm() %>">		
-		</li>
-	<%}} %>
-	</ul>
-</div>
 
+<%
+		for(int i=0; i<list2.size(); i++) {
+			MiniVO vo2 = list2.get(i);
+			String pnum2 = (vo2.getProd_num()).substring(0,4);
+			if(pnum2.equals("P601")){
+%>		
+	<div class="slider-item" >
+			<img class="background2" id="<%=vo2.getProd_num() %>" src="<%=request.getContextPath()%>/images/miniroom/<%=vo2.getProd_nm() %>">
+	</div>
+<%}} %>   
+       </div>
+    </div>
+    <div class="slider">
+        <div class="slider-inner">
+<%
+		for(int i=0; i<list2.size(); i++) {
+			MiniVO vo2 = list2.get(i);
+			String pnum2 = (vo2.getProd_num()).substring(0,4);
+			if(pnum2.equals("P501")){
+%>		
+	<div class="slider-item" >
+			<img class="minicon" id="<%=vo2.getProd_num() %>" src="<%=request.getContextPath()%>/images/minicon/<%=vo2.getProd_nm() %>">
+	</div>
+<%}} %>      
+
+       </div>
+    </div>
+
+    <div class="slider">
+        <div class="slider-inner">
+
+<%
+		for(int i=0; i<list2.size(); i++) {
+			MiniVO vo2 = list2.get(i);
+			String pnum2 = (vo2.getProd_num()).substring(0,4);
+			if(pnum2.equals("P401")){
+%>		
+	<div>
+			<img class="minimi" id="<%=vo2.getProd_num() %>" src="<%=request.getContextPath()%>/images/minimi/<%=vo2.getProd_nm() %>">		
+	</div>
+<%}} %>
+
+
+            
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
 <div id="info">
 <form name="updateroom1" id="updateroom" action="<%=request.getContextPath()%>/miniroomUpdate.do" method="post">
 	<input id="prodnum" type="hidden" name="prodnum" value="">
@@ -216,6 +227,10 @@ height : 100px;
 	<input id="backgr" type="hidden" name="backgr" value="2">
 </form>
 
-</div>
+</div>    
 </body>
+
+
+<script src="<%=request.getContextPath() %>/js/dsstyle.js"></script>
+
 </html>

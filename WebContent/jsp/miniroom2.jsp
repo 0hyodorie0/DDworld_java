@@ -1,9 +1,22 @@
+<%@page import="ddw.vo.MemberVO"%>
+<%@page import="ddw.vo.DdVO"%>
+<%@page import="java.util.Map"%>
 <%@page import="ddw.vo.MiniVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<%
+	Map<String, String> keys = (Map<String, String>)session.getAttribute("keys");
+	String keyDdworld = keys.get("keyDdworld");
+	
+	DdVO ddvo = (DdVO)session.getAttribute(keyDdworld);
+	MemberVO loginMember =  (MemberVO)session.getAttribute("loginMember");
+	
+%>
+
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -12,12 +25,20 @@
 <script src="<%=request.getContextPath()%>/js/1.12.1-jquery-ui.js"></script>
 <script> 
 $(function(){ 
+	
+	<% 	   
+    if(loginMember!=null && ddvo.getDd_add().equals(loginMember.getMem_id()+"dd")) {
+    	
+	%> 
+	
 	$(".mini img").draggable({
 		containment: '.mini',
 		opacity: 0.7
 // 		cancel: '.card-body'
 		
 	}); 
+	
+	<%}%>
 	
 // 	  $(".mini").mouseleave(function () {
 // 	  	var targetO = $(this);

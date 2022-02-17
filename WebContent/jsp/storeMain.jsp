@@ -1,3 +1,5 @@
+<%@page import="ddw.vo.DdVO"%>
+<%@page import="java.util.Map"%>
 <%@page import="ddw.vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -18,10 +20,28 @@
 
 <script type="text/javascript">
 $(function(){
-	$('#spreadhere').on('click','.btn-outline-dark' ,function(){
-		alert($(this).attr('id'));
+	$('#spreadhere').on('click','.buynow' ,function(){
+		/*alert($(this).attr('name') + ' 구매했습니다.');*/
+		str = "";
+		targetcon = $(this).attr('name');
+		targetDotori = parseInt($(this).parents('.h-100').find('span').text());
+		targetid = $(this).attr('id');
+		targetname = $(this).children('.prodnm').text();
+		str += targetcon + "(도토리 " + targetDotori + "개)\n";
+		str += ' 구매하시겠습니까?';
+		
+			if(confirm(str)){
+				alert('구매했습니다!');
+				location.href="/ddWorld/storeMiniroom.do?prodnum="+targetid+"&prodpa="+targetDotori+"&prodnm="+targetname+"&prodcon="+targetcon+"";
+				return true;
+			}else{
+				return false;
+			}
 	})
-
+	
+	$('#spreadhere').on('click','.needlogin' ,function(){
+		alert('로그인 후 이용가능합니다.');
+	})
 	
 	$('.nav-link').on('click', function(){
 		gu = $(this).attr('id')
@@ -48,15 +68,24 @@ $(function(){
 	                code += '<h5 class="fw-bolder">'
 	                code += v.prod_con;
 	                code += '</h5>';
-	                code += '도토리 ';
+	                code += '도토리 <span>';
 	                code += v.prod_pa;
-	                code += ' 개';
+	                code += '</span> 개';
 	                code += '</div></div>'
 	                code += '<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">'
-	                code += '<div class="text-center"><a id="'
+
+	                code += '<div class="text-center">';
+	                <%if(loginMember == null){%>
+	                code += '<a class="btn btn-outline-dark mt-auto needlogin">need login</a></div>';
+	                <%}else{%>
+	                code += '<a id="';
 	                code += v.prod_num;
-	                code += '"class="btn btn-outline-dark mt-auto" href="#">buy now</a></div>';
+	                code += '"class="btn btn-outline-dark mt-auto buynow" name ="'+v.prod_con+'">buy now<p class="prodnm" style="display:none">'+v.prod_nm+'</p></a></div>';	
+	                <%}%>
+	                
+
 	                code += '</div></div></div>'
+	                
 			    });
 				
 				$('#spreadhere').html(code);

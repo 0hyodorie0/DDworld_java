@@ -169,8 +169,7 @@ $(function(){
 		$('.modal').hide();
 	})
 	
-	requestId = "";
-	responseId = "";
+	
 	name = "";
 	$('#master').on('click', function(){
 		
@@ -182,10 +181,10 @@ $(function(){
 			alert('일촌신청 받으셨습니다. 수락해주세요!');
 		}else if(<%=oneChk %> == 3){
 			alert('이미 일촌신청 하셨습니다. 기다려주세요!');
-		}
-		<% if(memvo != null) {%>
-		else if(<%=oneChk %> == 4){
+		}else if(<%=oneChk %> == 4){
+			<%if(memvo != null){%>
 			var requestId = "<%=memvo.getMem_id() %>";
+			<%}%>
 			var responseId = "<%=ddvo.getMem_id() %>";
 			console.log(requestId + " / " + responseId);
 			
@@ -204,19 +203,25 @@ $(function(){
 			$('#yes, #no').show();
 			$('#ok').hide();
 		}
-		<% }%>
 		else{
 			alert('본인입니다!');
 		};
 	})
 	
-	$(document).on('click', '#yes', function(){
-		var onename = $('#onenameAthome').val();
+	$('#yes').on('click', function(){
+		onename = $('#onenameAthome').val();
+		<%if(memvo != null){%>
+		requestId2 = "<%=memvo.getMem_id() %>";
+		<%}%>
+		responseId2 = "<%=ddvo.getMem_id() %>";
+		
+		alert("방문자 : " + requestId2 + " / 홈피주인 : " + responseId2 + " / " + onename);
+		
 		newcode = "";
 		$.ajax({
 			url		  : '/ddWorld/requestOne.do',
-			data	  : {"requestId"  : requestId,
-						 "responseId" : responseId,
+			data	  : {"requestId"  : requestId2,
+						 "responseId" : responseId2,
 						 "onename" 	  : onename},
 			type	  : 'get',
 			success   : function(res){
@@ -225,16 +230,6 @@ $(function(){
 					newcode += name;
 					newcode += "'</span> 님께<br>";
 					newcode += "일촌 신청했습니다!";
-				}else if(res.sw == "일촌"){
-					newcode += "<span style='color:blue; font-size:1.5em; font-weight:bold;'>'";
-					newcode += name;
-					newcode += "'</span> 님은<br>";
-					newcode += "이미 일촌입니다!";
-				}else if(res.sw == "대기"){
-					newcode += "<span style='color:blue; font-size:1.5em; font-weight:bold;'>'";
-					newcode += name;
-					newcode += "'</span> 님께<br>";
-					newcode += "이미 신청하셨습니다. 수락을 기다려주세요!";
 				}else{
 					newcode += "실패했습니다!";
 				}
@@ -248,6 +243,7 @@ $(function(){
 			dataType  : 'json'
 		})
 	})
+	
 })
 
 
@@ -270,10 +266,19 @@ $(function(){
 			data	  : {'id' : masterid},
 			method	  : 'get',
 			success   : function(res){
-				code = '<table class="skins">';
-				code += '<tr><td></td><td>미리보기</td><td>스킨설명</td></tr>';
 				
-				$.each(res, function(i, v){
+
+				code = "";
+				
+				
+				if(res.sw == 'no'){
+					code += '<p>적용 가능한 스킨이 없습니다.</p>';
+					code += '<p>상점에서 구매해주세요!</p>';
+					$('#ok1').prop('value', '뒤로');
+				}else{
+					code += '<table class="skins">';
+					code += '<tr><td></td><td>미리보기</td><td>스킨설명</td></tr>';
+				$.each(res.datas, function(i, v){
 					code += '<tr><td><input value="';
 					code += v.prod_nm;
 					code += '" name="pickskin" type="radio"></td><td>';
@@ -283,8 +288,10 @@ $(function(){
 					code += '</td><td>';
 					code += v.prod_con;
 					code += '</td></tr>';
+					
 				})
 				code += '</table>';
+				}
 				
 				$('#detailModalBody').html(code);
 			},
@@ -433,9 +440,9 @@ $(function(){
       <div class="card bgm">
         <audio autoplay controls loop="loop"> 
         <!-- <source src="../audio/수취인불명-프리스타일.mp3" type="audio/mp3"> -->
-        <source src="../audio/우산 - 에픽하이.mp3" type="audio/mp3">
+        <source src="../audio/Y-프리스타일.mp3" type="audio/mp3">
         </audio>
-       <marquee scrollamount=8>수취인불명-프리스타일.mp3</marquee>
+       <marquee scrollamount=8>Y-프리스타일.mp3</marquee>
       </div>
 
 
@@ -524,7 +531,7 @@ $(function(){
 	        </div>
 	        
 	        <!-- Modal footer -->
-	        <div class="modal-footer">
+	        <div class="modal-footer requestbtn">
 	          <button id="yes" type="button" class="btn btn-danger">신청</button>
 	          <button id="no" type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 	          

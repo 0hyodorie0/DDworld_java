@@ -63,7 +63,7 @@
  </div>
 <div class="diabtn d-flex justify-content-end">
 	<input type="button" class="schBtn mx-1" value="일기쓰기" id="wrbtn">
-	<input type="button" class="schBtn mx-1" value="월별 전체일기" id="monbtn">
+<!-- 	<input type="button" class="schBtn mx-1" value="월별 전체일기" id="monbtn"> -->
 	<input type="button" class="schBtn mx-1" value="일정달력 보기" id="schbtn" onclick=location.href='mini_diary_schedule.jsp'>
 </div>
 <%
@@ -177,13 +177,10 @@
     			code = "";
     			 $.each(res, function(i,v){
     				code += '<div class="diary">';
-    				code += '<form class="diaryForm" action="mini_diary_update.jsp">';
     				
     				code += '<div class="diary-date">' + v.diary_date +'</div>';
-    				code += '<input type="hidden" value="' + v.diary_no +'" name="no">';
     				
     				code += '<div class="diary-contents p-4">' + v.diary_cont +'</div><br>';
-    				code += '<textarea name="cont" rows="3" style=display:none>'+v.diary_cont+'</textarea>';
     				
     				code += '<hr>';
        				<% 	   
@@ -193,14 +190,18 @@
     				code += '<div class="diaryHid px-4">';
     				code += '<div class="diary-type">공개설정 : ' + v.diary_type +'</div>';
     				code += '<input type="hidden" value="' + v.diary_type +'" name="type">';
-    				
  
+    				
+    				code += '<form class="diaryupForm" id="diaryupForm" action="mini_diary_update.jsp">';
+    				code += '<input type="hidden" value="' + v.diary_no +'" name="no">';
+    				code += '<textarea name="cont" rows="3" style=display:none>'+v.diary_cont+'</textarea>';
+    				
 // 					code += '<input type="button" id=' + v.diary_no + ' value="수정" onclick='updateDia(this.id);'">';
 // 					code += '<input type="button" id="updateBtn" name="' + v.diary_no + '" value="수정" onclick="updateBtn(this.name);">';
 					code += '<input type="submit" id="updateBtn" value="수정">';
     				code += '</form>';
     				
-					code += '<form class="diaryForm" action="/ddWorld/diaryDelete.do">';
+					code += '<form class="diarydelForm" id="diarydelForm" action="/ddWorld/diaryDelete.do">';
 					code += '<input type="hidden" value="' + v.diary_no +'" name="no">';
     				code += '<input type="submit"  value="삭제">';
 //     				code += '<input type="button"  onclick="location.href=\'/diaryDelete.do?diary_no="'+v.diary_no+'\"\'\" value="삭제" >';
@@ -242,7 +243,7 @@
 			    				code += '</form>';
 			    			})
 			    				code += '<div class="reply diaryReplyin h-100 pb-3 mt-1">';
-			    				code += '<form action="/ddWorld/diaryReInsert.do"><br>';
+			    				code += '<form class="diaryreForm" id="diaryreForm" action="/ddWorld/diaryReInsert.do"><br>';
 			    				code += ' <input type="hidden" name="diaryNo"  value="'+v.diary_no+'">';
 			    				code += ' 댓글 <input type="text" name="diaryRe"  size="50" placeholder="댓글을 입력해 주세요">';
 			    				code += ' <input type="submit" value="확인">';
@@ -281,28 +282,34 @@
     			code = "";
     			 $.each(res, function(i,v){
     				code += '<div class="diary">';
-    				code += '<form class="diaryForm" action="mini_diary_update.jsp">';
     				
     				code += '<div class="diary-date">' + v.diary_date +'</div>';
-    				code += '<input type="hidden" value="' + v.diary_no +'" name="no">';
     				
     				code += '<div class="diary-contents p-4">' + v.diary_cont +'</div><br>';
-    				code += '<textarea name="cont" rows="3" style=display:none>'+v.diary_cont+'</textarea>';
     				
     				code += '<hr>';
     				<% 	   
     			    if(loginMember!=null && ddvo.getDd_add().equals(loginMember.getMem_id()+"dd")) {
     			    	
     				%> 
+    				
+    				
     				code += '<div class="diaryHid px-4">';
     				code += '<div class="diary-type">공개설정 : ' + v.diary_type +'</div>';
     				code += '<input type="hidden" value="' + v.diary_type +'" name="type">';
+    				
+    				
+    				
+    				
+    				code += '<form class="diaryupForm" id="diaryupForm" action="mini_diary_update.jsp">';
+    				code += '<input type="hidden" value="' + v.diary_no +'" name="no">';
+    				code += '<textarea name="cont" rows="3" style=display:none>'+v.diary_cont+'</textarea>';
     				
 // 					code += '<input type="button" id=' + v.diary_no + ' value="수정" onclick='updateDia(this.id);'">';
 // 					code += '<input type="button" id="updateBtn" name="' + v.diary_no + '" value="수정" onclick="updateBtn(this.name);">';
 					code += '<input type="submit" id="updateBtn" value="수정">';
     				code += '</form>';
-					code += '<form class="diaryForm" action="/ddWorld/diaryDelete.do">';
+					code += '<form class="diarydelForm" id="diarydelForm" action="/ddWorld/diaryDelete.do">';
 					code += '<input type="hidden" value="' + v.diary_no +'" name="no">';
     				code += '<input type="submit" value="삭제">';
 //     				code += '<input type="button"  onclick="location.href=\'/diaryDelete.do?diary_no="'+v.diary_no+'\"\'\" value="삭제" >';
@@ -333,10 +340,11 @@
 			    				
 			    				
 		    					<%if(loginMember != null){%>
-			    				if(v.mem_id=='<%=loginMember.getMem_id()%>' || '<%=ddvo.getDd_add()%>'=='<%=loginMember.getMem_id()+"dd"%>'){
-				    				code += ' <input type="submit" value="X">';
+<%-- 			    					if(v.mem_id=='<%=loginMember.getMem_id()%>' || '<%=ddvo.getDd_add()%>'=='<%=loginMember.getMem_id()+"dd"%>'){ --%>
+				    				
+// 			    						code += ' <input type="submit" value="X">';
 			    					
-			    				}
+// 			    					}
 			    				<%}%>
 			    				code += '<input type="hidden" name="memid" value="'+v.mem_id+'">'
 			    				code += '<input type="hidden" name="renum" value="'+v.diary_renum+'">'
@@ -346,11 +354,11 @@
 			    				
 			    			})
 			    				code += '<div class="reply diaryReplyin h-100 pb-3 mt-1">';
-			    				code += '<form action="/ddWorld/diaryReInsert.do"><br>';
+			    				code += '<form class="diaryreForm" id="diaryreForm" action="/ddWorld/diaryReInsert.do"><br>';
 			    				code += ' <input type="hidden" name="diaryNo"  value="'+v.diary_no+'">';
 			    				code += ' 댓글 <input type="text" name="diaryRe"  size="50" placeholder="댓글을 입력해 주세요">';
 			    				code += ' <input type="submit" value="확인">';
-			    				code += '</div>';
+			    				code += '</form></div>';
 		    				
 		    				$ ('.diaryRelist').html(code);	
 		    			},
