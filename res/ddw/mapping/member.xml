@@ -57,7 +57,12 @@
                 (SELECT MEM_NAME FROM MEMBER WHERE MEM_ID = #mem_id#)||'님의 미니홈피입니다.')
 	</insert>
 	
-	
+<!-- 	상품구매 도토리 변경-->
+	<update id="dtrUpdatemini" parameterClass="memberVo">
+		 update member 
+	        set MEM_DTR=#mem_dtr#
+	      where mem_id=#mem_id#
+	</update>
 <!-- [ 내정보 수정하기  start] -->
 
        <!-- 내정보 보여지는 select문 -->

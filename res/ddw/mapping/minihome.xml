@@ -26,6 +26,10 @@
 			insert (profile_con,dd_add) 
 			values (#profile_con#,#dd_add#)		
 	</update>
+
+<insert id="insertProd" parameterClass="prodVo">
+    insert into ORD values((select nvl(max(ORD_NUM), 0) + 1 from ORD), sysdate, #mem_id#, #prod_num#)
+</insert>
 	
 	<!-- 사진첩 리스트 불러오기 -->
 	<select id="selectAllPhoto" parameterClass="string" resultClass="photoVo">
@@ -163,6 +167,18 @@
 		update MINIROOM set MINI_TYPE=#mini_type#
 		where DD_ADD=#dd_add# AND PROD_NUM=#prod_num#
 	</update>
+	
+	
+	<!-- 상품 구매 -->
+	<insert id="insertprodMem" parameterClass="miniVo">
+		insert into MINIROOM 
+		values (#dd_add#,'190','190',#prod_num#,#prod_nm#,#mini_type#)
+	</insert>
+	
+<!-- 	보유 상품 검색 -->
+	<select id="countMiniprod" parameterClass="string" resultClass="int">
+		select count (*) from MINIROOM where DD_ADD=#dd_add# AND PROD_NUM=#prod_num#
+	</select>
 	
 
 </sqlMap>
